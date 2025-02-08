@@ -73,5 +73,17 @@ Les tests ont été réalisés sur plusieurs produits Amazon. Les résultats obt
 Ce projet démontre l’efficacité de l’automatisation du scraping, de l’analyse des avis et de la génération de résumés. La séparation en deux parties (scraping conteneurisé et analyse hors conteneur) permet une meilleure flexibilité et optimisation des ressources.
 
 ## 8. Captures d'Écran
-Des captures d’écran seront ajoutées pour illustrer l’interface et le fonctionnement de chaque partie.
+Des captures d’écran seront ajoutées pour illustrer :
+
+L’interface Flask permettant le scraping.
+![image](https://github.com/user-attachments/assets/1af32c2f-1c58-49af-9704-870bacfa320c)
+
+
+Les résultats des différents endpoints (avis, recherche, résumé).
+
+L'affichage des statistiques FAISS.
+
+L'interface affichant le résumé des avis.
+
+Cela permettra de mieux visualiser le fonctionnement global du projet.
 
