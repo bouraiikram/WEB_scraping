@@ -1,5 +1,8 @@
 # WEB_scraping
 # Rapport de Projet : Analyse de Sentiment des Avis Clients avec Résumé Automatique
+#Réalisé par : 
+- BOUACEM OUSSAMA
+- BOURAI IKRAM
 
 ## 1. Introduction
 L'objectif de ce projet est de développer une application permettant de :
