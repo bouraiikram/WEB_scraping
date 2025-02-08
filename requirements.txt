@@ -1,0 +1,6 @@
+Flask
+Flask-Cors
+selenium
+pymongo
+torch
+transformers
