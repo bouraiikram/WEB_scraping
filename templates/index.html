@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scraper d'Avis Amazon</title>
+    <script>
+        function scrapeReviews() {
+            let url = document.getElementById("product_url").value;
+            fetch("/scrape", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "product_url=" + encodeURIComponent(url)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert("Erreur : " + data.error);
+                } else {
+                    alert("Scraping réussi !");
+                    window.location.reload();
+                }
+            });
+        }
+
+        function getReviews() {
+            fetch("/reviews")
+            .then(response => response.json())
+            .then(data => {
+                let reviewsContainer = document.getElementById("reviews_list");
+                reviewsContainer.innerHTML = "";
+                data.forEach(review => {
+                    let listItem = document.createElement("li");
+                    listItem.textContent = review.comment + " (Note : " + review.rating + ")";
+                    reviewsContainer.appendChild(listItem);
+                });
+            });
+        }
+
+        function summarizeReviews() {
+    fetch("/summary")
+    .then(response => response.json())
+    .then(data => {
+        console.log("Réponse du serveur :", data);  // ✅ Voir la réponse dans la console
+        if (data.error) {
+            alert("Erreur : " + data.error);
+        } else {
+            document.getElementById("summary_result").textContent = data.summary;
+        }
+    })
+    .catch(error => console.error("Erreur réseau :", error));  // ✅ Voir s'il y a un problème de requête
+}
+
+           
+        
+    </script>
+</head>
+<body>
+    <h1>Scraper d'Avis Amazon</h1>
+    
+    <label for="product_url">Entrez l'URL du produit Amazon :</label>
+    <input type="text" id="product_url" placeholder="https://www.amazon.fr/..." required>
+    <button onclick="scrapeReviews()">Scraper</button>
+
+    <h2>Avis récupérés</h2>
+    <button onclick="getReviews()">Afficher les avis</button>
+    <ul id="reviews_list"></ul>
+
+    <h2>Résumé des Avis</h2>
+    <button onclick="summarizeReviews()">Générer le résumé</button>
+    <p id="summary_result"></p>
+</body>
+</html>

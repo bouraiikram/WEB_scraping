@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statut FAISS</title>
+    <script>
+        async function fetchFaissStatus() {
+            let response = await fetch("/faiss_status_json");
+            let data = await response.json();
+
+            document.getElementById("nb_avis").textContent = data.nombre_d_avis_stockés;
+            
+            let avisList = document.getElementById("avis_list");
+            avisList.innerHTML = "";
+
+            data.avis_exemple.forEach(avis => {
+                let li = document.createElement("li");
+                li.textContent = avis.username + " : " + avis.comment;
+                avisList.appendChild(li);
+            });
+        }
+
+        window.onload = fetchFaissStatus;
+    </script>
+</head>
+<body>
+    <h1>Statut de la Base FAISS</h1>
+    <p><strong>Nombre d'avis stockés :</strong> <span id="nb_avis">0</span></p>
+
+    <h2>Exemple d'avis stockés :</h2>
+    <ul id="avis_list"></ul>
+
+    <button onclick="fetchFaissStatus()">Actualiser</button>
+</body>
+</html>
