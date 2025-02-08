@@ -1,6 +1,6 @@
 # WEB_scraping
 # Rapport de Projet : Analyse de Sentiment des Avis Clients avec Résumé Automatique
-#Réalisé par : 
+# Réalisé par : 
 - BOUACEM OUSSAMA
 - BOURAI IKRAM
 
