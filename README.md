@@ -75,15 +75,22 @@ Ce projet démontre l’efficacité de l’automatisation du scraping, de l’an
 ## 8. Captures d'Écran
 Des captures d’écran seront ajoutées pour illustrer :
 
-L’interface Flask permettant le scraping.
+L’interface Flask permettant le scraping, et l'interface affichant le résumé des avis.
+
 ![image](https://github.com/user-attachments/assets/1af32c2f-1c58-49af-9704-870bacfa320c)
+![image](https://github.com/user-attachments/assets/9791e627-fc4e-4646-8480-13519e517b91)
 
 
 Les résultats des différents endpoints (avis, recherche, résumé).
+![image](https://github.com/user-attachments/assets/843137ab-622f-4ad0-975e-166abfe114c6)
+![image](https://github.com/user-attachments/assets/a19d5eaa-905d-440f-8819-ad046ad564f5)
+
+
 
 L'affichage des statistiques FAISS.
+![image](https://github.com/user-attachments/assets/5ca63843-e532-4bd0-866e-b956c3ab01a6)
 
-L'interface affichant le résumé des avis.
+
 
 Cela permettra de mieux visualiser le fonctionnement global du projet.
 
