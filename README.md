@@ -6,7 +6,7 @@
 
 ## 1. Introduction
 L'objectif de ce projet est de développer une application permettant de :
-- Scraper des avis clients depuis un site e-commerce.
+- Scraper des avis clients depuis un site e-commerce ( Amazon ).
 - Analyser leur sentiment (positif, neutre, négatif) à l'aide d'un modèle d'apprentissage automatique.
 - Générer un résumé synthétique des avis collectés.
 
