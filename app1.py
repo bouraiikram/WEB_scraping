@@ -12,7 +12,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from sentence_transformers import SentenceTransformer
 from transformers import BartForConditionalGeneration, BartTokenizer
 
-# ✅ Désactiver les logs inutiles pour économiser de la mémoire
+#  Désactiver les logs inutiles pour économiser de la mémoire
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Forcer l'utilisation CPU uniquement
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Réduire les logs TensorFlow
@@ -21,25 +21,25 @@ app = Flask(__name__)
 
 JSON_FILE = "reviews.json"
 
-# ✅ Modèle Sentence Transformer allégé
+# Modèle Sentence Transformer allégé
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 d = 384  # Dimension des embeddings
 index = faiss.IndexFlatL2(d)  # ✅ Initialisation correcte de FAISS
 reviews = []  # Stocke les avis en mémoire
 
-# ✅ Modèle BART plus léger
+# Modèle BART plus léger
 bart_model_name = "sshleifer/distilbart-cnn-12-6"
 bart_tokenizer = BartTokenizer.from_pretrained(bart_model_name)
 bart_model = BartForConditionalGeneration.from_pretrained(
     bart_model_name, device_map="cpu", low_cpu_mem_usage=True
 )
 
-# ✅ Initialisation unique de VADER pour éviter de le recréer à chaque appel
+#  Initialisation unique de VADER pour éviter de le recréer à chaque appel
 analyzer = SentimentIntensityAnalyzer()
 
 
-# ✅ Analyse de sentiment améliorée
+#  Analyse de sentiment améliorée
 def analyze_sentiment_vader(comment, rating=None):
     """
     Analyse de sentiment avec VADER + pondération basée sur la note (rating).
@@ -70,7 +70,7 @@ def analyze_sentiment_vader(comment, rating=None):
     return "Neutre"
 
 
-# ✅ Extraction des notes numériques
+#  Extraction des notes numériques
 def extract_numeric_rating(rating_text):
     """
     Extrait la note sous forme numérique depuis une chaîne du type '4,5 sur 5 étoiles'.
@@ -79,7 +79,7 @@ def extract_numeric_rating(rating_text):
     return float(match.group(1).replace(",", ".")) if match else None
 
 
-# ✅ Scraping des avis Amazon avec Selenium (mode headless)
+#  Scraping des avis Amazon avec Selenium (mode headless)
 def scrape_reviews(product_url):
     print(f"[INFO] Scraping en cours: {product_url}")
     chrome_options = Options()
@@ -117,12 +117,12 @@ def scrape_reviews(product_url):
         driver.quit()
     return data
 
-# ✅ Stocker les avis dans un fichier JSON
+# Stocker les avis dans un fichier JSON
 def store_reviews_json(data):
     with open(JSON_FILE, "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
 
-# ✅ Fonction pour rechercher des avis similaires avec FAISS
+# Fonction pour rechercher des avis similaires avec FAISS
 def search_reviews_faiss(query, k=3):
     if index.ntotal == 0:
         return ["Aucun avis disponible."]
@@ -130,7 +130,7 @@ def search_reviews_faiss(query, k=3):
     D, I = index.search(np.array([query_vector], dtype=np.float32), k)
     return [reviews[i]["comment"] for i in I[0] if i >= 0]
 
-# ✅ Charger les avis stockés en JSON
+#  Charger les avis stockés en JSON
 def get_reviews_json():
     if os.path.exists(JSON_FILE):
         try:
@@ -141,14 +141,14 @@ def get_reviews_json():
     return []
 
 
-# ✅ Résumé des avis avec BART
+#  Résumé des avis avec BART
 def summarize_text(text, max_length=130, min_length=30):
     inputs = bart_tokenizer(text, return_tensors="pt", max_length=1024, truncation=True)
     summary_ids = bart_model.generate(inputs["input_ids"], max_length=max_length, min_length=min_length, length_penalty=2.0, num_beams=4, early_stopping=True)
     return bart_tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 
-# ✅ Récupérer le nombre d'éléments dans FAISS
+#  Récupérer le nombre d'éléments dans FAISS
 def get_faiss_info():
     return index.ntotal
 
@@ -157,12 +157,12 @@ def get_faiss_info():
 
 
 
-# ✅ Route de la page d'accueil
+# Route de la page d'accueil
 @app.route("/")
 def index():
     return render_template("index.html")
 
-# ✅ Route pour scraper des avis Amazon
+#  Route pour scraper des avis Amazon
 @app.route("/scrape", methods=["POST"])
 def scrape():
     product_url = request.form.get("product_url")
@@ -196,7 +196,7 @@ def store_review_faiss(username, comment):
 
 
 
-# ✅ Route pour rechercher des avis similaires avec FAISS
+#  Route pour rechercher des avis similaires avec FAISS
 @app.route("/search", methods=["GET"])
 def search():
     query = request.args.get("query")
@@ -205,25 +205,25 @@ def search():
     return jsonify({"query": query, "results": search_reviews_faiss(query, k=5)})
 
 
-# ✅ Route pour afficher les avis stockés
+#  Route pour afficher les avis stockés
 @app.route("/reviews")
 def show_reviews():
     return jsonify(get_reviews_json())
 
 
-# ✅ Route pour vérifier le statut de FAISS
+#  Route pour vérifier le statut de FAISS
 @app.route("/faiss_status")
 def faiss_status():
     return jsonify({"faiss_total": index.ntotal})
 
 
-# ✅ Route pour afficher les avis stockés en mémoire
+#  Route pour afficher les avis stockés en mémoire
 @app.route("/stored_reviews")
 def stored_reviews():
     return jsonify([rev["comment"] for rev in reviews])
 
 
-# ✅ Route pour générer un résumé des avis
+#  Route pour générer un résumé des avis
 @app.route("/summary", methods=["GET"])
 def summarize_reviews():
     if not reviews:
@@ -236,6 +236,6 @@ def summarize_reviews():
     return jsonify({"summary": summarize_text(full_text)})
 
 
-# ✅ Lancement de Flask
+#  Lancement de Flask
 if __name__ == "__main__":
     app.run(debug=False)
