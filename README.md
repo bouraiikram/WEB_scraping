@@ -53,9 +53,13 @@ Le projet est divisé en deux parties :
 Les endpoints disponibles sont :
 - `/scrape` : Récupère les avis d'un produit.
 - `/reviews` : Renvoie les avis stockés.
+- ![image](https://github.com/user-attachments/assets/f94bb081-768d-4ce2-9abc-f7c1bad242c7)
+
 - `/search` : Recherche des avis similaires.
 - `/summary` : Génère un résumé des avis.
 - `/faiss_status` : Indique le nombre d'entrées indexées.
+- ![image](https://github.com/user-attachments/assets/3361093f-85c6-4f2c-8767-5e0dd3aaf00e)
+
 
 ## 5. Tests et Résultats
 Les tests ont été réalisés sur plusieurs produits Amazon. Les résultats obtenus montrent une bonne précision dans :
