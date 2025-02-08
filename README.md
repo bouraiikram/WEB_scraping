@@ -9,7 +9,7 @@ L'objectif de ce projet est de développer une application permettant de :
 
 Le projet est divisé en deux parties :
 1. **Partie avec Docker** : Scraping de toutes les pages de commentaires avec une interface Flask.
-2. **Partie sans Docker** : Inclut l'analyse de sentiment, la recherche vectorielle et la génération de résumés.
+2. **Partie sans Docker** : Scraping de toutes les pages de commentaires avec une interface Flask + l'analyse de sentiment, la recherche vectorielle et la génération de résumés.
 
 ## 2. Technologies et Outils Utilisés
 
